@@ -29,6 +29,7 @@ namespace Kirjakortisto.Models
         public string Author { get; set; }
 
         [Index]
+        [Display(Name = "Purchase Date")]
         [Required(ErrorMessage = "Purchase date is required!")]
         public DateTime PurchaseDate { get; set; }
     }
