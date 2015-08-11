@@ -27,3 +27,7 @@ textarea {
 .searchContainer {
     margin-bottom: 10px;
 }
+
+.highlighted {
+    color: red;
+}

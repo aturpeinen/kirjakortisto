@@ -87,16 +87,16 @@
 
         <tr ng-repeat="book in model | filter: searchFilter | orderBy: sortName : sortReverse">
             <td>
-                {{ book.Name }}
+                <p ng-bind-html="book.Name | highlight:searchFilter"></p>
             </td>
             <td>
-                {{ book.Description }}
+                <p ng-bind-html="book.Description | highlight:searchFilter"></p>
             </td>
             <td>
-                {{ book.Author }}
+                <p ng-bind-html="book.Author | highlight:searchFilter"></p>
             </td>
             <td>
-                {{ book.PurchaseDate | convertDate | date : "yyyy-MM-dd" }}
+                <p ng-bind-html="book.PurchaseDate | convertDate | date:'yyyy-MM-dd' | highlight:searchFilter"></p>
             </td>
             <td>
                 @BootstrapHelpers.IconLink(@Url.Action("Edit") + "/?id={{ book.Id}}", "pencil", "Edit")
