@@ -11,62 +11,81 @@
     <!-- Debug model -->
     @*<p>{{ model | json }}</p>*@
 
-    <p>
-        @Html.ActionLink("Add Purchased Book", "Create")
-    </p>
+
+    <div class="searchContainer">
+        <form class="form-inline" role="form">
+            <div class="form-group has-feedback">
+                <input type="text" ng-model="searchFilter" class="form-control" placeholder="Search for...">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </div>
+        </form>
+    </div>
+    
 
     <table class="table">
         <tr>
             <th>
                 <a href="" ng-click="sortName='Name'; sortReverse=!sortReverse">
                     @Html.DisplayNameFor(model => model.Name)
+
+                    <span ng-show="sortName=='Name' && !sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                    <span ng-show="sortName=='Name' && sortReverse" class="glyphicon glyphicon-chevron-down"></span>
                 </a>
             </th>
             <th>
                 <!-- Bonus feature: also allow to sort by description -->
                 <a href="" ng-click="sortName='Description'; sortReverse=!sortReverse">
                     @Html.DisplayNameFor(model => model.Description)
+
+                    <span ng-show="sortName=='Description' && !sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                    <span ng-show="sortName=='Description' && sortReverse" class="glyphicon glyphicon-chevron-down"></span>
                 </a>
             </th>
             <th>
                 <a href="" ng-click="sortName='Author'; sortReverse=!sortReverse">
                     @Html.DisplayNameFor(model => model.Author)
+
+                    <span ng-show="sortName=='Author' && !sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                    <span ng-show="sortName=='Author' && sortReverse" class="glyphicon glyphicon-chevron-down"></span>
                 </a>
             </th>
             <th>
                 <a href="" ng-click="sortName='PurchaseDate'; sortReverse=!sortReverse">
                     @Html.DisplayNameFor(model => model.PurchaseDate)
+
+                    <span ng-show="sortName=='PurchaseDate' && !sortReverse" class="glyphicon glyphicon-chevron-up"></span>
+                    <span ng-show="sortName=='PurchaseDate' && sortReverse" class="glyphicon glyphicon-chevron-down"></span>
                 </a>
             </th>
             <th></th>
         </tr>
 
         @*@foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Author)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PurchaseDate)
-                </td>
-                <td>
-                    @BootstrapHelpers.IconLink(@Url.Action("Edit", new { id = item.Id }), "pencil", "Edit")
-                    |
-                    @BootstrapHelpers.IconLink(@Url.Action("Details", new { id = item.Id }), "info-sign", "Details")
-                    |
-                    @BootstrapHelpers.IconLink(@Url.Action("Delete", new { id = item.Id }), "trash", "Delete")
-                </td>
-            </tr>
-        }*@
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PurchaseDate)
+                    </td>
+                    <td>
+                        @BootstrapHelpers.IconLink(@Url.Action("Edit", new { id = item.Id }), "pencil", "Edit")
+                        |
+                        @BootstrapHelpers.IconLink(@Url.Action("Details", new { id = item.Id }), "info-sign", "Details")
+                        |
+                        @BootstrapHelpers.IconLink(@Url.Action("Delete", new { id = item.Id }), "trash", "Delete")
+                    </td>
+                </tr>
+            }*@
 
-        <tr ng-repeat="book in model | orderBy: sortName : sortReverse">
+        <tr ng-repeat="book in model | filter: searchFilter | orderBy: sortName : sortReverse">
             <td>
                 {{ book.Name }}
             </td>
@@ -80,14 +99,22 @@
                 {{ book.PurchaseDate | convertDate | date : "yyyy-MM-dd" }}
             </td>
             <td>
-                @BootstrapHelpers.IconLink(@Url.Action("Edit")+"/?id={{ book.Id}}", "pencil", "Edit")
+                @BootstrapHelpers.IconLink(@Url.Action("Edit") + "/?id={{ book.Id}}", "pencil", "Edit")
                 |
-                @BootstrapHelpers.IconLink(@Url.Action("Details")+"/?id={{ book.Id}}", "info-sign", "Details")
+                @BootstrapHelpers.IconLink(@Url.Action("Details") + "/?id={{ book.Id}}", "info-sign", "Details")
                 |
-                @BootstrapHelpers.IconLink(@Url.Action("Delete")+"/?id={{ book.Id}}", "trash", "Delete")
+                @BootstrapHelpers.IconLink(@Url.Action("Delete") + "/?id={{ book.Id}}", "trash", "Delete")
             </td>
         </tr>
-        
+
+        <tr>
+            <td colspan="5">
+                <p>
+                    @BootstrapHelpers.IconLink(@Url.Action("Create"), "plus", "Add Purchased Book")
+                </p>
+            </td>
+        </tr>
+
 
     </table>
 

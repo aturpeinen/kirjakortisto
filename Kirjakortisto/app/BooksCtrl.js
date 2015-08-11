@@ -3,6 +3,8 @@
         $http.get("/Books/IndexJSON").success(function (data) {
             $scope.model = data;
             $scope.sortReverse = false;
-            $scope.sortName = ""
+            $scope.sortName = "";
+            $scope.searchFilter = "ABC";
+
         });
     }]);
