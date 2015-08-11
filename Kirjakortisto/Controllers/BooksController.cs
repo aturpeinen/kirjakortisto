@@ -21,6 +21,11 @@ namespace Kirjakortisto.Controllers
             return View(db.MyEntities.ToList());
         }
 
+        public JsonResult IndexJSON()
+        {
+            return Json(db.MyEntities.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Books/Details/5
         public ActionResult Details(int? id)
         {

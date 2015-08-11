@@ -26,6 +26,10 @@ namespace Kirjakortisto
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            // Add custom angular scripts
+            bundles.Add(new ScriptBundle("~/bundles/angularScripts")
+                .IncludeDirectory("~/app", "*.js", true));
         }
     }
 }
