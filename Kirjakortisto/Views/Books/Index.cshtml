@@ -11,16 +11,13 @@
     <!-- Debug model -->
     @*<p>{{ model | json }}</p>*@
 
-
     <div class="searchContainer">
-        <form class="form-inline" role="form">
-            <div class="form-group has-feedback">
-                <input type="text" ng-model="searchFilter" class="form-control" placeholder="Search for...">
-                <span class="glyphicon glyphicon-search form-control-feedback"></span>
-            </div>
-        </form>
+        <div class="right">
+            <input type="text" ng-model="searchFilter" class="form-control" placeholder="Search for..." />
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        </div>
     </div>
-    
+
 
     <table class="table">
         <tr>
@@ -99,11 +96,17 @@
                 <p ng-bind-html="book.PurchaseDate | convertDate | date:'yyyy-MM-dd' | highlight:searchFilter"></p>
             </td>
             <td>
-                @BootstrapHelpers.IconLink(@Url.Action("Edit") + "/?id={{ book.Id}}", "pencil", "Edit")
-                |
-                @BootstrapHelpers.IconLink(@Url.Action("Details") + "/?id={{ book.Id}}", "info-sign", "Details")
-                |
-                @BootstrapHelpers.IconLink(@Url.Action("Delete") + "/?id={{ book.Id}}", "trash", "Delete")
+                <ul class="pageLinks">
+                    <li>
+                        @BootstrapHelpers.IconLink(@Url.Action("Edit") + "/?id={{ book.Id}}", "pencil", "Edit")
+                    </li>
+                    <li>
+                        @BootstrapHelpers.IconLink(@Url.Action("Details") + "/?id={{ book.Id}}", "info-sign", "Details")
+                    </li>
+                    <li>
+                        @BootstrapHelpers.IconLink(@Url.Action("Delete") + "/?id={{ book.Id}}", "trash", "Delete")
+                    </li>
+                </ul>
             </td>
         </tr>
 

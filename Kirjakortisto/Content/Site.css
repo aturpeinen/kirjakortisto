@@ -25,9 +25,43 @@ textarea {
 
 
 .searchContainer {
-    margin-bottom: 10px;
+    height: 50px;
+}
+.searchContainer .right {
+    position: absolute;
 }
 
 .highlighted {
     color: red;
 }
+
+ul.pageLinks {
+    list-style: none;
+    display: inline-block;
+    min-width: 215px;
+    padding: 0;
+}
+
+ul.pageLinks li {
+    border: none;
+    border-left: 1px solid #ccc;
+    display: inline-block;
+    padding: 0 5px;
+}
+ul.pageLinks li:first-child {
+    border-left: none;
+}
+
+@media only screen and (max-width: 600px) {
+    ul.pageLinks {
+        min-width: 95px;
+    }
+    ul.pageLinks li span {
+        display: none;
+    }
+
+    table.table > tbody > tr > th {
+        padding: 8px 4px;
+    }
+}
+

@@ -7,7 +7,7 @@
             return date;
         };
     })
-    .filter('highlight', function ($sce) {
+    .filter('highlight', ["$sce", function ($sce) {
         return function (text, phrase) {
             if (phrase) text = text.replace(new RegExp('(' + phrase + ')', 'gi'),
               '[[[$1]]]')
@@ -15,4 +15,4 @@
             text = text.replace(/\[\[\[/g, '<span class="highlighted">').replace(/\]\]\]/g, '</span>');
             return $sce.trustAsHtml(text)
         }
-    })
+    }])

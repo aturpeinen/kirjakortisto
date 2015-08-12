@@ -4,7 +4,7 @@
             $scope.model = data;
             $scope.sortReverse = false;
             $scope.sortName = "";
-            $scope.searchFilter = "ABC";
+            $scope.searchFilter = "";
 
         });
     }]);
