@@ -27,6 +27,12 @@ textarea {
 .searchContainer {
     height: 50px;
 }
+
+/* Angular bug fix */
+.searchContainer input[type=text]::-ms-clear {
+   display: none;
+}
+
 .searchContainer .right {
     position: absolute;
 }
@@ -62,6 +68,10 @@ ul.pageLinks li:first-child {
 
     table.table > tbody > tr > th {
         padding: 8px 4px;
+    }
+
+    table.table {
+        font-size: 12px;
     }
 }
 
