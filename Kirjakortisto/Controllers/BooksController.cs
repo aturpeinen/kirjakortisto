@@ -8,22 +8,35 @@ using System.Web;
 using System.Web.Mvc;
 using Kirjakortisto.Context;
 using Kirjakortisto.Models;
+using Kirjakortisto.Repositories;
 
 namespace Kirjakortisto.Controllers
 {
     public class BooksController : Controller
     {
-        private LibraryContext db = new LibraryContext();
+        private readonly IBooksRepository booksRepository;
+
+        // No needed because of DI
+        /*public BooksController()
+        {
+            booksRepo = new BooksRepository();
+        }*/
+
+        // Use constructor injection for the dependencies
+        public BooksController(IBooksRepository booksRepository)
+        {
+            this.booksRepository = booksRepository;
+        }
 
         // GET: Books
         public ActionResult Index()
         {
-            return View(db.MyEntities.ToList());
+            return View(/*db.Books.ToList()*/); // Angular loads books with ajax
         }
 
         public JsonResult IndexJSON()
         {
-            return Json(db.MyEntities.ToList(), JsonRequestBehavior.AllowGet);
+            return Json(booksRepository.Books.ToList(), JsonRequestBehavior.AllowGet);
         }
 
         // GET: Books/Details/5
@@ -33,7 +46,7 @@ namespace Kirjakortisto.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.MyEntities.Find(id);
+            Book book = booksRepository.GetById(id.Value);
             if (book == null)
             {
                 return HttpNotFound();
@@ -56,8 +69,7 @@ namespace Kirjakortisto.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.MyEntities.Add(book);
-                db.SaveChanges();
+                booksRepository.Save(book);
                 return RedirectToAction("Index");
             }
 
@@ -71,7 +83,7 @@ namespace Kirjakortisto.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.MyEntities.Find(id);
+            Book book = booksRepository.GetById(id.Value);
             if (book == null)
             {
                 return HttpNotFound();
@@ -88,8 +100,7 @@ namespace Kirjakortisto.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(book).State = EntityState.Modified;
-                db.SaveChanges();
+                booksRepository.Save(book);
                 return RedirectToAction("Index");
             }
             return View(book);
@@ -102,7 +113,7 @@ namespace Kirjakortisto.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.MyEntities.Find(id);
+            Book book = booksRepository.GetById(id.Value);
             if (book == null)
             {
                 return HttpNotFound();
@@ -115,9 +126,8 @@ namespace Kirjakortisto.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Book book = db.MyEntities.Find(id);
-            db.MyEntities.Remove(book);
-            db.SaveChanges();
+            Book book = booksRepository.GetById(id);
+            booksRepository.Delete(book);
             return RedirectToAction("Index");
         }
 
@@ -125,7 +135,7 @@ namespace Kirjakortisto.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                booksRepository.Dispose();
             }
             base.Dispose(disposing);
         }
